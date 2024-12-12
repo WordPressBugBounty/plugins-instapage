@@ -4,7 +4,7 @@ Tags: landing page, lead generation, a/b testing, Instapage, squeeze page
 Requires at least: 3.4
 Requires PHP: 5.4.0
 Tested up to: 6.7
-Stable tag: 3.5.10
+Stable tag: 3.5.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Join 250,000+ businesses who rely on Instapage.
 4. Instapage app's dashboard.
 
 == Changelog ==
+= 3.5.11 (2024-12-12) =
+- Internal optimizations
+
 = 3.5.10 (2024-10-07) =
 - Updated 'Tested up to' field to version 6.7
 
