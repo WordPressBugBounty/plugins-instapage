@@ -3,7 +3,7 @@
 /*
 Plugin Name: Instapage Plugin
 Description: The best way for WordPress to seamlessly publish landing pages as a natural extension of your website.
-Version: 3.5.11
+Version: 3.5.12
 Requires PHP: 5.4.0
 Plugin URI: https://instapage.com/
 Author: Instapage
@@ -15,7 +15,7 @@ define('INSTAPAGE_PLUGIN_PATH', dirname(__FILE__));
 define('INSTAPAGE_PLUGIN_FILE', __FILE__);
 define('INSTAPAGE_SUPPORT_EMAIL', 'help@instapage.com');
 define('INSTAPAGE_PLUGIN_MINIMUM_PHP_VERSION', '5.2.4');
-define('INSTAPAGE_PLUGIN_VERSION', '3.5.11');
+define('INSTAPAGE_PLUGIN_VERSION', '3.5.12');
 
 /**
  * @var array $consts Holds constant names to be defined with their default values - if not already defined or found in `$_ENV`
