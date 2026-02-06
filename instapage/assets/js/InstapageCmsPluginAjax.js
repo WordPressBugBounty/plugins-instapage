@@ -21,6 +21,10 @@ var InstapageCmsPluginAjax = function InstapageCmsPluginAjax() {
 
     xmlhttp.open(method, url + urlAppendix, async);
 
+    if (typeof INSTAPAGE_CSRF_TOKEN !== 'undefined' && INSTAPAGE_CSRF_TOKEN) {
+      xmlhttp.setRequestHeader('X-CSRF-Token', INSTAPAGE_CSRF_TOKEN);
+    }
+
     if (method === 'POST') {
       var formData = new FormData();
       formData.append('data', encodeURI(JSON.stringify(data)));

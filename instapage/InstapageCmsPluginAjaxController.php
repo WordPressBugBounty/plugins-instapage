@@ -36,6 +36,12 @@ class InstapageCmsPluginAjaxController {
       exit;
     }
 
+    if (InstapageCmsPluginConnector::isNonceInvalid()) {
+      InstapageCmsPluginHelper::writeDiagnostics($action, 'Nonce token rejected. Validation failed during execution ajax action');
+      echo InstapageCmsPluginHelper::formatJsonMessage(InstapageCmsPluginConnector::lang('Nonce Token Rejected: We could not verify the token. This mechanism protects against unauthorized requests. Refreshing the page usually helps. If the error returns, contact the Instapage Support Team.'), 'ERROR');
+      exit;
+    }
+
     switch ($action) {
       case 'loginUser':
         $this->loginUser();
@@ -191,17 +197,27 @@ class InstapageCmsPluginAjaxController {
     $token = isset($post->data->token) ? $post->data->token : null;
     $headers = array('accountkeys' => InstapageCmsPluginHelper::getAuthHeader(array($token)));
     $response = json_decode($api->apiCall('page/get-sub-accounts-list', null, $headers));
-    $subAccount = isset($response->data) ? $response->data : null;
+    $subAccounts = isset($response->data) ? $response->data : [];
 
-    if (!InstapageCmsPluginHelper::checkResponse($response, null, false) || !$response->success || count($subAccount) == 0) {
+    if (!InstapageCmsPluginHelper::checkResponse($response, null, false) || !$response->success || count($subAccounts) == 0) {
       echo json_encode((object) array(
         'status' => 'OK',
         'valid' => false
      ));
     } else {
+      $workspaceUsingGivenToken = null;
+
+      foreach ($subAccounts as $subAccount) {
+        if ($subAccount->accountkey === $token) {
+          $workspaceUsingGivenToken = $subAccount;
+        }
+      }
+
       echo json_encode((object) array(
         'status' => 'OK',
-        'valid' => true
+        'valid' => true,
+        'workspaceName' => empty($workspaceUsingGivenToken->name) ? null : $workspaceUsingGivenToken->name,
+        'workspaceId' => empty($workspaceUsingGivenToken->id) ? null : $workspaceUsingGivenToken->id,
      ));
     }
   }
@@ -365,8 +381,8 @@ class InstapageCmsPluginAjaxController {
     $api = InstapageCmsPluginAPIModel::getInstance();
     $post = InstapageCmsPluginHelper::getPostData();
     $tokens = array($post->data->subAccountToken);
-    $headers = array('accountkeys' => InstapageCmsPluginHelper::getAuthHeader($tokens));
-    $responseJson = $api->apiCall('page/list', null, $headers);
+    $data = array('accountkeys' => $tokens);
+    $responseJson = $api->apiCall('page/list', $data);
     $response = json_decode($responseJson);
     $page = InstapageCmsPluginPageModel::getInstance();
     $publishedPages = $page->getAll(array('instapage_id'));

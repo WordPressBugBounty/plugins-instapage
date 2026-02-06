@@ -71,7 +71,7 @@
             </div>
           </div>
 
-          <table class="c-table">
+          <table class="c-table ip-added-token-listing">
             <caption class="c-table__caption">
               <div class="l-group l-group--block l-group--ver-center l-group--hor-space-between c-table__caption-row">
                 <div class="l-group__item c-table__caption-cell">
@@ -80,22 +80,18 @@
               </div>
             </caption>
 
-            <thead class="c-table__head">
-              <tr>
-                <th class="c-table__cell c-table__cell--left"><?php echo InstapageCmsPluginConnector::lang('Token'); ?></th>
-                <th class="c-table__cell c-table__cell--right"><?php echo InstapageCmsPluginConnector::lang('Remove'); ?></th>
-              </tr>
-            </thead>
-
             <tbody class="c-table__body" data-bind="foreach: config.tokens">
               <tr>
                 <td class="c-table__cell c-table__cell--left">
-                  <div class="c-form-text-item" data-bind="css: {'has-danger': valid() < 0, 'has-success': valid() > 0}">
+                  <div class="c-form-text-item ip-token-item__read-only" data-bind="css: {'has-danger': valid() < 0, 'has-success': valid() > 0}">
                     <input class="c-form-text-item__field" data-bind="value: value, valueUpdate: 'input', css: {'is-not-empty': value}" type="textbox" size="50" readonly="readonly"/>
-                    <label class="c-form-text-item__label"><?php echo InstapageCmsPluginConnector::lang('Add token'); ?></label>
+                    <label data-bind="if: workspaceId" class="c-form-text-item__label ip-token-description">
+                      (Workspace name: "<strong><span data-bind="text: workspaceName"></span></strong>",
+                      workspace id: <span data-bind="text: workspaceId"></span>)
+                    </label>
                     <div class="c-form-text-item__bar"></div>
                     <span class="c-form-text-item__info" data-bind="visible: valid() < 0" >
-                      <span><?php echo InstapageCmsPluginConnector::lang('This token is invalid.'); ?></span>
+                      <span><?php echo InstapageCmsPluginConnector::lang('This token is invalid. (it could be regenerated on app.instapage.com side)'); ?></span>
                       <i class="material-icons c-form-text-item__info-icon"><?php echo InstapageCmsPluginConnector::lang('error'); ?></i>
                     </span>
                   </div>

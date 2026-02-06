@@ -42,8 +42,8 @@
 
 .instapage-cms-plugin td .page-url a
 {
-  word-wrap: break-word; 
-  word-break: break-all; 
+  word-wrap: break-word;
+  word-break: break-all;
   display: inline-block;
 }
 
@@ -186,6 +186,7 @@
 .instapage-cms-plugin .c-table__cell:last-child
 {
   padding-right: 15px;
+  padding-top: 0px;
 }
 
 .instapage-cms-plugin .page-loader
@@ -197,4 +198,22 @@
 {
   font-weight: 600;
   color: #cc0000;
+}
+
+.instapage-cms-plugin .ip-token-description
+{
+  padding-left: 0;
+}
+
+.instapage-cms-plugin .ip-added-token-listing {
+  margin: 20px auto;
+}
+
+.instapage-cms-plugin .ip-added-token-listing .c-table__caption-row {
+  padding-left: 15px;
+}
+
+.instapage-cms-plugin .ip-token-item__read-only.has-danger {
+  margin-bottom: 15px;
+  padding-top: 0;
 }

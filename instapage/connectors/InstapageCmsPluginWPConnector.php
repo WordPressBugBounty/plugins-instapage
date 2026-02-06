@@ -331,7 +331,30 @@ class InstapageCmsPluginWPConnector {
    * @return string AJAX URL.
    */
   public function getAjaxURL() {
-    return admin_url('admin-ajax.php') . '?action=instapage_ajax_call';
+    $nonce = $this->getNonceTokenValue();
+
+    return admin_url('admin-ajax.php') . '?action=instapage_ajax_call&' . $this->getNonceGetParameterName() . '=' . $nonce;
+  }
+
+  /**
+   * @return string
+   */
+  public function getNonceTokenValue() {
+    return wp_create_nonce(InstapageCmsPluginHelper::getNonceName());
+  }
+
+  /**
+   * @return bool;
+   */
+  public function isNonceInvalid() {
+    $validationResult = wp_verify_nonce(InstapageCmsPluginHelper::filterInput(INPUT_GET, $this->getNonceGetParameterName()), InstapageCmsPluginHelper::getNonceName());
+
+    return $validationResult === false;
+  }
+
+  private function getNonceGetParameterName()
+  {
+    return '_wpnonce';
   }
 
   /**
@@ -522,7 +545,7 @@ class InstapageCmsPluginWPConnector {
    * Loads the plugin dashboard.
    */
   public function loadPluginDashboard() {
-    InstapageCmsPluginHelper::initAjaxURL();
+    InstapageCmsPluginHelper::initAjaxJavaScriptVariablesScript();
     InstapageCmsPluginHelper::loadTemplate('messages');
     InstapageCmsPluginHelper::loadTemplate('toolbar');
     InstapageCmsPluginHelper::loadTemplate('base');

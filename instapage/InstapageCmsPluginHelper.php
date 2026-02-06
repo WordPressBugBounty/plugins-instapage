@@ -55,8 +55,29 @@ class InstapageCmsPluginHelper {
   /**
    * Sets an AJAX endpoint for Instapage plugin.
    */
-  public static function initAjaxURL() {
-    echo '<script>var INSTAPAGE_AJAXURL = \'' . InstapageCmsPluginConnector::getAjaxURL() . '\';</script>';
+  public static function initAjaxJavaScriptVariablesScript() {
+    echo '<script>
+        ' . self::getAjaxJavaScriptVariables() . '
+    </script>';
+  }
+
+  public static function getAjaxJavaScriptVariables() {
+    $ajaxUrl = json_encode(InstapageCmsPluginConnector::getAjaxURL(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+    $csrfToken = json_encode(\InstapageCmsPluginConnector::getSelectedConnector()->getNonceTokenValue(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+
+    return '
+      var INSTAPAGE_AJAXURL = ' . $ajaxUrl . ';
+      var INSTAPAGE_CSRF_TOKEN = ' . $csrfToken . ';
+    ';
+  }
+
+  public static function getNonceHeaderName()
+  {
+    return 'HTTP_X_CSRF_TOKEN';
+  }
+
+  public static function getNonceName() {
+    return 'instapage-ajax-nonce';
   }
 
   /**

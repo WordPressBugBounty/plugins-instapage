@@ -1,6 +1,6 @@
 Instapage Plugin
 
-Copyright 2013 instapage.com
+Copyright 2025 instapage.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ and
 
   Instapage Plugin
 
-  Copyright 2010-2013 Instapage
+  Copyright 2010-2025 Instapage
 
   Instapage Plugin is released under the GPL
 

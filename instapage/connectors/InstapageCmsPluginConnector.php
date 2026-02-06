@@ -443,4 +443,17 @@ class InstapageCmsPluginConnector {
     list($search, $replace) = $useHttpsProtocol ? $protocolsToToggle : array_reverse($protocolsToToggle);
     return str_ireplace($search, $replace, $url);
   }
+
+  /**
+   * @return bool
+   */
+  public static function isNonceInvalid()
+  {
+    return self::getSelectedConnector()->isNonceInvalid();
+  }
+
+  public static function getNonceValue()
+  {
+    return self::getSelectedConnector()->getNonceTokenValue();
+  }
 }

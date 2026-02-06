@@ -220,6 +220,8 @@ const InstapageCmsPluginSettingsModel = function InstapageCmsPluginSettingsModel
 
       if (response.status === 'OK' && response.valid === true) {
         token.valid(1);
+        token.workspaceId(response.workspaceId);
+        token.workspaceName(response.workspaceName);
 
         if (typeof onSuccessFunction === 'function') {
           onSuccessFunction();
@@ -365,14 +367,16 @@ const PluginConfig = function PluginConfig(data) {
 
   if ( data && data.tokens && Array.isArray(data.tokens) ) {
     data.tokens.forEach( function prepareTokens(element) {
-      self.tokens.push(new Token(element.value, element.valid));
+      self.tokens.push(new Token(element.value, element.valid, element.workspaceName, element.workspaceId));
     });
   }
 };
 
-var Token = function Token(value, valid) {
+var Token = function Token(value, valid, workspaceName, workspaceId) {
   var self = this;
 
   self.value = instapageKO.observable(value);
   self.valid = typeof valid !== 'undefined' ? instapageKO.observable(valid) : instapageKO.observable(0);
+  self.workspaceId = typeof workspaceId !== 'undefined' ? instapageKO.observable(workspaceId) : instapageKO.observable(null);
+  self.workspaceName = typeof workspaceName !== 'undefined' ? instapageKO.observable(workspaceName) : instapageKO.observable(null);
 };
